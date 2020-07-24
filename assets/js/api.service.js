@@ -1,6 +1,6 @@
-var api = axios.create({
-    baseURL = 'http://localhost:1337'
-})
+const api = axios.create({
+    baseURL: 'http://localhost:1337'
+});
 
 axios.interceptors.response.use(res => {
     return res;
