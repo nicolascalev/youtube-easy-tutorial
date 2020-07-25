@@ -1,5 +1,5 @@
 const api = axios.create({
-    baseURL: 'http://localhost:1337'
+    baseURL: 'http://192.168.0.10:1337'
 });
 
 async function initApi() {
