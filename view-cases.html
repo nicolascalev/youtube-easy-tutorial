@@ -91,7 +91,7 @@
                                 <span class="float-right" v-if="cvcase.status == 'Sano'">😜</span>
                                 <h2 class="text-gray-900 title-font font-medium cursor-pointer"
                                     @click="showPlaces(cvcase)">{{cvcase.name}}</h2>
-                                <p class="text-gray-500">{{cvcase.status}}</p>
+                                <p class="text-gray-500">{{moment(cvcase.createdAt).startOf('minute').fromNow()}}</p>
                             </div>
                         </div>
                     </div>
@@ -141,6 +141,7 @@
 
     <script src="assets/js/api.service.js"></script>
     <script src="assets/js/view-cases.page.js"></script>
+    <script src="createContent.js"></script>
 </body>
 
 </html>

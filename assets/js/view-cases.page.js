@@ -13,10 +13,14 @@ var app = new Vue({
     },
 
     methods: {
+
+        moment: moment,
+
         async findCases() {
             var params = {
                 limit: 100,
                 sort: 'createdAt DESC',
+                omit: 'username, password',
                 populate: false
             }
             var where = {
@@ -26,7 +30,7 @@ var app = new Vue({
                 ]
             }
             var cases = await req.find('case', params, where);
-            if (!cases) return alert('No cases found 🙄');
+            if (!cases || cases.length == 0) return alert('No cases found 🙄');
             this.cases = cases;
         },
 
