@@ -2,21 +2,30 @@ const api = axios.create({
     baseURL: 'http://localhost:1337'
 });
 
-axios.interceptors.response.use(res => {
-    return res;
-}, err => {
-    var error;
-    if (err.response) {
-        if (err.response.data.details) {
-            error = err.response.data.details;
-        } else {
-            error = err.response.data;
-        }
-    } else {
-        error = err.message;
+async function initApi() {
+    // in case you need an interceptor on the request it goes here
+
+    function initInterceptors() {
+        api.interceptors.response.use(res => {
+            return res;
+        }, err => {
+            var error;
+            if (err.response) {
+                if (err.response.data.details) {
+                    error = err.response.data.details;
+                } else {
+                    error = err.response.data;
+                }
+            } else {
+                error = err.message;
+            }
+            return Promise.reject(error);
+        });
     }
-    return Promise.reject(error);
-});
+    initInterceptors();
+}
+initApi();
+
 
 var req = {
 
