@@ -1,5 +1,5 @@
 const api = axios.create({
-    baseURL: 'http://192.168.0.10:1337'
+    baseURL: 'https://covid-easyapp.herokuapp.com'
 });
 
 async function initApi() {
