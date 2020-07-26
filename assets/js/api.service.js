@@ -64,5 +64,18 @@ var req = {
         } catch (err) {
             alert(err);
         }
+    },
+
+    async replace(model, id, association, array) {
+        const options = {
+            headers: { 'content-type': 'text/plain' }
+        }
+        var array = `[${array.toString()}]`;
+        try {
+            var { data } = await api.put(`/${model}/${id}/${association}`, array, options);
+            return data;
+        } catch (err) {
+            alert(err);
+        }
     }
 }
