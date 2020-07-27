@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid APP</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="plugins/tailwind/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <div id="app">
+        <p v-if="ownPlaces.length == 0">You have visited no places</p>
+        <p v-if="notOwnedPlaces.length == 0">There are no other places to show</p>
+        <h1>Visited places</h1>
+        <div v-for="oplace in ownPlaces">
+            <p>{{oplace.name}} Visited</p>
+        </div>
+        <h1>Not visited places</h1>
+        <div v-for="noplace in notOwnedPlaces">
+            <p>{{noplace.name}} Not Visited</p>
+        </div>
+    </div>
+    
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/axios/axios.min.js"></script>
+    <script src="plugins/lodash/lodash.js"></script>
+    <script src="plugins/vue/vuedev.js"></script>
+
+    <script src="assets/js/api.service.js"></script>
+    <script src="assets/js/me.page.js"></script>
+</body>
+</html>
