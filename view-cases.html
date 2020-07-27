@@ -7,6 +7,7 @@
     <title>Covid APP</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="plugins/tailwind/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
 <body>
@@ -84,6 +85,7 @@
         <section class="text-gray-700 body-font">
             <div class="container px-5 py-5 mx-auto">
                 <div class="flex flex-wrap -m-2">
+                    <div class="col-sm-2 sp sp-volume" v-if="loading"></div>
                     <div class="p-2 lg:w-1/3 md:w-1/2 w-full" v-for="cvcase in cases">
                         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                             <div class="flex-grow">
@@ -118,6 +120,19 @@
                                 <span v-if="selectedCase.status == 'Crítico'">🥵</span>
                                 <span v-if="selectedCase.status == 'Contagiado'">🤢</span>
                                 <span v-if="selectedCase.status == 'Sano'">😜</span>
+                            </div>                            
+                            <div class="mt-2 overflow-auto h-64">
+                                <p v-if="casePlaces.length == 0" class="text-gray-500">{{selectedCase.name}} has visited 0 places.</p>
+                                <div class="col-sm-2 sp sp-volume" v-if="loadingPlaces"></div>
+                                <div class="p-2 lg:w-1/3 md:w-1/2 w-full" v-for="place in casePlaces">
+                                    <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+                                        <div class="flex-grow">
+                                            <h2 class="text-gray-900 title-font font-medium cursor-pointer"
+                                                @click="showCases(place)">{{place.name}}</h2>
+                                            <p class="text-gray-500">{{moment(place.createdAt).startOf('minute').fromNow()}}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
