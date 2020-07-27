@@ -29,9 +29,9 @@ initApi();
 
 var req = {
 
-    async findOne(model, id) {
+    async findOne(model, id, params = {}) {
         try {
-            var { data } = await api.get(`/${model}/${id}`);
+            var { data } = await api.get(`/${model}/${id}`, { params });
             return data;
         } catch (err) {
             alert(err);
