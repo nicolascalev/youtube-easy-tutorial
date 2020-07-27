@@ -2,9 +2,12 @@ var app = new Vue({
     el: '#app',
 
     data: {
+        loading: false,
+        loadingCases: false,
         places: [],
         name: '',
-        selectedPlace: null
+        selectedPlace: null,
+        placeCases: []
     },
 
     created() {
@@ -16,6 +19,7 @@ var app = new Vue({
         moment: moment,
 
         async findPlaces() {
+            this.loading = true;
             var params = {
                 limit: 100,
                 sort: 'createdAt DESC',
@@ -25,12 +29,22 @@ var app = new Vue({
                 name: { contains: this.name },
             }
             var places = await req.find('place', params, where);
+            this.loading = false;
             if (!places || places.length == 0) return alert('No cases found 🙄');
             this.places = places;
         },
 
-        showCases(place) {
+        async showCases(place) {
+            this.loadingCases = true;
             this.selectedPlace = { ...place }
+            var res = await req.findOne('place', place.id);
+            this.placeCases = res.cases;
+            this.loadingCases = false;
+        },
+
+        closeModal() {
+            this.selectedPlace = null;
+            this.placeCases = [];
         }
     }
 })
