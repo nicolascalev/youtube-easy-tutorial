@@ -1,5 +1,5 @@
 const api = axios.create({
-    baseURL: 'https://covid-easyapp.herokuapp.com'
+    baseURL: 'http://192.168.0.4:1337'
 });
 
 async function initApi() {
@@ -71,7 +71,7 @@ var req = {
             var { data } = await api.patch(`/${model}/${id}`, formData);
             return data;
         } catch (err) {
-            
+            alert(err)
         }
     },
 
@@ -85,6 +85,15 @@ var req = {
             return data;
         } catch (err) {
             alert(err);
+        }
+    },
+
+    async login(formData) {
+        try {
+            var { data } = await api.put('/login', formData);
+            return data;
+        } catch (err) {
+            alert(err)
         }
     }
 }
