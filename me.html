@@ -67,6 +67,7 @@
                     <div class="w-full my-3 py-5 px-2">
                         <h2 class="text-xl font-semibold">Places 
                             <span class="text-base ml-1 px-3 rounded-full bg-gray-200 shadow-lg hover:bg-indigo-200"
+                            @click="addPlaceModal = true"
                             >Add</span>
                         </h2>
                     </div>
@@ -93,6 +94,49 @@
                 </div>
             </div>
         </section>
+
+        <!-- Update Own places button -->
+        <button class="fixed right-0 bottom-0 m-10 z-10 px-5 py-1 font-bold bg-indigo-500 text-white text-xl rounded-md"
+        @click="replacePlaces()"
+        >&#10003;</button>
+
+        <!-- Add Place Modal -->
+        <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
+            v-if="addPlaceModal">
+            <div class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg mb-2 leading-6 font-medium text-gray-900" id="modal-headline">
+                                Add a place
+                            </h3>
+                            <input class="w-full bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" 
+                            type="text" placeholder="San Sebastian (CR)" v-model="placeFormData.name">
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                        <button type="button"
+                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            @click="addPlace()">
+                            Submit
+                        </button>
+                    </span>
+                    <span class="flex mt-2 w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                        <button type="button"
+                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-gray-200 text-base leading-6 font-medium text-gray-900 shadow-sm hover:bg-gray-400 focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            @click="addPlaceModal = false">
+                            Close
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="plugins/moment/moment.min.js"></script>

@@ -8,7 +8,12 @@ var app = new Vue({
         loading: false,
         ownPlaces: [],
         notOwnedPlaces: [],
-        checkedPlaces: []
+        checkedPlaces: [],
+
+        addPlaceModal: false,
+        placeFormData: {
+            name: ''
+        }
     },
 
     created() {
@@ -79,6 +84,28 @@ var app = new Vue({
             if(!res) return alert(`Sorry, we can't update your status right now`);
             this.me.status = res.status;
             alert('Status updated.')
+        },
+
+        async addPlace() {
+            var formData = new FormData();
+            formData.append('name', this.placeFormData.name);
+            this.addPlaceModal = false;
+            this.loading = true;
+            var res = await req.create('place', formData);
+            if (!res) return alert('Sorry we could not add a place this time')
+            this.loading = false;
+            alert('You just added a place!')
+            this.notOwnedPlaces.unshift(res);
+        },
+
+        async replacePlaces() {
+            var confirmed = confirm('Sure you want to update your places?');
+            if(!confirmed) return;
+            this.loading = true;
+            var res = await req.replace('case', this.userId, 'places', this.checkedPlaces);
+            this.loading = false;
+            if(!res) return alert('We could not update your places this time 😢')
+            alert('Your places were updated');
         }
     },
 })
