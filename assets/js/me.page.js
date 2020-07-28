@@ -4,6 +4,7 @@ var app = new Vue({
     data: {
         userId: undefined,
         username: undefined,
+        me: null,
         loading: false,
         ownPlaces: [],
         notOwnedPlaces: [],
@@ -13,11 +14,15 @@ var app = new Vue({
     created() {
         this.verifySession()
         if (this.userId && this.username) {
+            this.loadUserInfo();
             this.loadOwnPlaces()
         }
     },
 
     methods: {
+
+        moment: moment,
+
         verifySession() {
             const userId = localStorage.getItem('userId')
             const username = localStorage.getItem('username')
@@ -26,6 +31,16 @@ var app = new Vue({
             }
             this.userId = Number(userId);
             this.username = username;
+        },
+
+        async loadUserInfo() {
+            var params = {
+                populate: false,
+                omit: 'password'
+            }
+            this.loading = true;
+            this.me = await req.findOne('case', this.userId, params);
+            this.loading = false;
         },
 
         async loadOwnPlaces() {
@@ -53,6 +68,17 @@ var app = new Vue({
             var places = await req.find('place', params, where)
             this.loading = false;
             this.notOwnedPlaces = places;
+        },
+
+        async updateStatus(status) {
+            this.loading = true;
+            var formData = new FormData();
+            formData.append('status', status);
+            var res = await req.update('case', this.userId, formData);
+            this.loading = false;
+            if(!res) return alert(`Sorry, we can't update your status right now`);
+            this.me.status = res.status;
+            alert('Status updated.')
         }
     },
 })

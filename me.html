@@ -38,16 +38,46 @@
         </div>
 
         <section class="text-gray-700 body-font">
+            <div class="container px-5 pt-5 pb-2 mx-auto h-40 bg-gray-100 text-center">
+                <div v-if="me">
+                    <h1 class="text-2xl font-bold">{{me.name}}</h1>
+                    <p class="text-gray-600 mt-2">@{{me.username}}</p>
+                    <p class="text-gray-600">{{moment(me.createdAt).calendar()}}</p>
+                    <span v-if="me.status == 'Crítico'">🥵</span>
+                    <span v-if="me.status == 'Contagiado'">🤢</span>
+                    <span v-if="me.status == 'Sano'">😜</span>
+                    <span v-if="me.status == ''">Tell us your status.</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex pt-1 pb-4 px-2 bg-gray-100" v-if="me">
+            <button class="ml-3 mr-2 w-1/3 py-2 px-4 border border-gray-300 rounded-md"
+            :class="{ 'bg-indigo-500': me.status == 'Sano' }" @click="updateStatus('Sano')">😜</button>
+            <button class="mr-2 py-2 w-1/3 px-4 border border-gray-300 rounded-md"
+            :class="{ 'bg-indigo-500': me.status == 'Contagiado' }" @click="updateStatus('Contagiado')">🤢</button>
+            <button class="mr-2 py-2 w-1/3 px-4 border border-gray-300 rounded-md"
+            :class="{ 'bg-indigo-500': me.status == 'Crítico' }" @click="updateStatus('Crítico')">🥵</button>
+        </div>
+
+        <section class="text-gray-700 body-font">
             <div class="container px-5 py-5 mx-auto">
                 <div class="col-sm-2 sp sp-volume w-full" v-if="loading"></div>
                 <div class="flex flex-wrap -m-2">
-                    <p v-if="ownPlaces.length == 0 && !loading" class="mt-2">You have visited no places</p>
-                    <p v-if="notOwnedPlaces.length == 0 && !loading" class="mt-2">There are no other places to show</p>
+                    <div class="w-full my-3 py-5 px-2">
+                        <h2 class="text-xl font-semibold">Places 
+                            <span class="text-base ml-1 px-3 rounded-full bg-gray-200 shadow-lg hover:bg-indigo-200"
+                            >Add</span>
+                        </h2>
+                    </div>
+                    <p v-if="ownPlaces.length == 0 && !loading" class="mt-2 w-full">You have visited no places</p>
+                    <p v-if="notOwnedPlaces.length == 0 && !loading" class="mt-2 w-full">There are no other places to show</p>
                     <div class="p-2 lg:w-1/3 md:w-1/2 w-full" v-for="oplace in ownPlaces">
                         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                             <div class="inline-block relative w-full">
                                 <label class="text-gray-700">{{oplace.name}}</label>
-                                <input class="absolute right-0 mt-1" type="checkbox" :value="oplace.id" v-model="checkedPlaces">
+                                <input class="absolute right-0 mt-1" type="checkbox" :value="oplace.id"
+                                    v-model="checkedPlaces">
                             </div>
                         </div>
                     </div>
@@ -55,7 +85,8 @@
                         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                             <div class="inline-block relative w-full">
                                 <label class="text-gray-700">{{noplace.name}}</label>
-                                <input class="absolute right-0 mt-1" type="checkbox" :value="noplace.id" v-model="checkedPlaces">
+                                <input class="absolute right-0 mt-1" type="checkbox" :value="noplace.id"
+                                    v-model="checkedPlaces">
                             </div>
                         </div>
                     </div>
