@@ -6,12 +6,15 @@ var app = new Vue({
         username: undefined,
         loading: false,
         ownPlaces: [],
-        notOwnedPlaces: []
+        notOwnedPlaces: [],
+        checkedPlaces: []
     },
 
     created() {
         this.verifySession()
-        this.loadOwnPlaces()
+        if (this.userId && this.username) {
+            this.loadOwnPlaces()
+        }
     },
 
     methods: {
@@ -33,6 +36,7 @@ var app = new Vue({
             var { places } = await req.findOne('case', this.userId, params)
             this.loading = false;
             this.ownPlaces = places;
+            this.checkedPlaces = _.map(places, 'id')
             await this.loadNotOwnedPlaces();
         },
 
