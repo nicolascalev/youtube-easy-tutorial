@@ -106,6 +106,19 @@ var app = new Vue({
             this.loading = false;
             if(!res) return alert('We could not update your places this time 😢')
             alert('Your places were updated');
+        },
+
+        async logout() {
+            var confirmed = confirm('Sure you want to logout?')
+            if(!confirmed) return;
+            try {
+                await api.put('/logout')
+                localStorage.removeItem('username')
+                localStorage.removeItem('userId')
+                window.location = 'login.html'
+            } catch (err) {
+                alert(err)
+            }
         }
     },
 })
