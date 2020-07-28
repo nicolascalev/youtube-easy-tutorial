@@ -66,6 +66,15 @@ var req = {
         }
     },
 
+    async update(model, id, formData) {
+        try {
+            var { data } = await api.patch(`/${model}/${id}`, formData);
+            return data;
+        } catch (err) {
+            
+        }
+    },
+
     async replace(model, id, association, array) {
         const options = {
             headers: { 'content-type': 'text/plain' }
