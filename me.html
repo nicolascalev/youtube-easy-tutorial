@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body>
+<body class="min-h-screen min-w-full">
     <div id="app">
 
         <div class="px-2 py-3">
@@ -101,7 +101,7 @@
 
         <!-- Update Own places button -->
         <button class="fixed right-0 bottom-0 m-10 z-10 px-5 py-1 font-bold bg-indigo-500 text-white text-xl rounded-md"
-        @click="replacePlaces()"
+        @click="replacePlaces()" v-if="!addPlaceModal"
         >&#10003;</button>
 
         <!-- Add Place Modal -->
