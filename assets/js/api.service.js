@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:1337';
+const BASE_URL = 'https://covid-easyapp.herokuapp.com';
 
 const api = axios.create({
     baseURL: BASE_URL
