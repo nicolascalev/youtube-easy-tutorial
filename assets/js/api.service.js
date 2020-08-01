@@ -1,31 +1,70 @@
+const BASE_URL = 'http://localhost:1337';
+
 const api = axios.create({
-    baseURL: 'http://192.168.0.4:1337'
+    baseURL: BASE_URL
 });
 
-async function initApi() {
-    // in case you need an interceptor on the request it goes here
+const auth = axios.create({
+    baseURL: BASE_URL
+})
 
-    function initInterceptors() {
-        api.interceptors.response.use(res => {
-            return res;
-        }, err => {
-            var error;
-            if (err.response) {
-                if (err.response.data.details) {
-                    error = err.response.data.details;
-                } else {
-                    error = err.response.data;
-                }
-            } else {
-                error = err.message;
-            }
-            return Promise.reject(error);
-        });
-    }
-    initInterceptors();
+async function initialize() {
+
+    api.interceptors.request.use(config => {
+        config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken') || '';
+        return config
+    }, err => {
+        return Promise.reject(err)
+    })
+
+    api.interceptors.response.use(res => {
+        return res;
+    }, err => {
+        var error;
+        error = err.message;
+        if (err.response.data) {
+            error = err.response.data;
+            error = error.details ? error.details : error;
+            error = (!error.details && error.message) ? error.message : error;
+            if (err.response.status == 401) return authreq.reloadAccessToken();
+        }
+        return Promise.reject(error);
+    });
 }
-initApi();
 
+var authreq = {
+    async reloadAccessToken() {
+        try {
+            var params = {
+                headers: { 'authorization': `Bearer ${localStorage.getItem('refreshToken')}` }
+            }
+            var { data } = await auth.put('/getAccessToken', {}, params);
+            localStorage.setItem('accessToken', data.accessToken);
+            alert('Try request again')
+        } catch (err) {
+            alert(err.message)
+        }
+    },
+
+    async login(formData) {
+        try {
+            var { data } = await auth.put('/login', formData);
+            return data;
+        } catch (err) {
+            alert(err)
+        }
+    },
+
+    logout() {
+        var confirmed = confirm('Sure you want to logout?')
+        if (!confirmed) return;
+        localStorage.removeItem('username')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        window.location = 'login.html'
+    }
+}
 
 var req = {
 
@@ -87,13 +126,6 @@ var req = {
             alert(err);
         }
     },
-
-    async login(formData) {
-        try {
-            var { data } = await api.put('/login', formData);
-            return data;
-        } catch (err) {
-            alert(err)
-        }
-    }
 }
+
+initialize();

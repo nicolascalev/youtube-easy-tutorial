@@ -109,16 +109,7 @@ var app = new Vue({
         },
 
         async logout() {
-            var confirmed = confirm('Sure you want to logout?')
-            if(!confirmed) return;
-            try {
-                await api.put('/logout')
-                localStorage.removeItem('username')
-                localStorage.removeItem('userId')
-                window.location = 'login.html'
-            } catch (err) {
-                alert(err)
-            }
+            authreq.logout()
         }
     },
 })

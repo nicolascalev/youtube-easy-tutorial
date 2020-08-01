@@ -12,11 +12,13 @@ var app = new Vue({
         async submitLoginForm(e) {
             e.preventDefault();
             this.loading = true;
-            var res = await req.login(this.formData);
+            var res = await authreq.login(this.formData);
             this.loading = false;
             if(!res) return alert('Could not login.')
-            localStorage.setItem('userId', res.id)
-            localStorage.setItem('username', res.username)
+            localStorage.setItem('accessToken', res.accessToken)
+            localStorage.setItem('refreshToken', res.refreshToken)
+            localStorage.setItem('userId', res.cvcase.id)
+            localStorage.setItem('username', res.cvcase.username)
             window.location = 'me.html';
         }
     }
