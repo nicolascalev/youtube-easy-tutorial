@@ -106,6 +106,10 @@ var app = new Vue({
             this.loading = false;
             if(!res) return alert('We could not update your places this time 😢')
             alert('Your places were updated');
+        },
+
+        async logout() {
+            authreq.logout()
         }
     },
 })
