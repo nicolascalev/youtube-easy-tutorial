@@ -1,11 +1,11 @@
-const BASE_URL = 'https://covid-easyapp.herokuapp.com';
+const API_BASE_URL = 'https://covid-easyapp.herokuapp.com';
 
 const api = axios.create({
-    baseURL: BASE_URL
+    baseURL: API_BASE_URL
 });
 
 const auth = axios.create({
-    baseURL: BASE_URL
+    baseURL: API_BASE_URL
 })
 
 async function initialize() {
