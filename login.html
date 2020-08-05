@@ -28,7 +28,7 @@
                 </li>
                 <li class="mr-1">
                     <a class="bg-white inline-block py-2 px-4 text-indigo-500 hover:text-indigo-800 font-semibold"
-                    href="view-places.html">Places</a>
+                        href="view-places.html">Places</a>
                 </li>
                 <li class="mr-1">
                     <a class="bg-white inline-block py-2 px-4 text-indigo-500 hover:text-indigo-800 font-semibold"
@@ -36,7 +36,7 @@
                 </li>
                 <li class="-mb-px mr-1">
                     <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-indigo-700 font-semibold"
-                    href="login.html">Login</a>
+                        href="login.html">Login</a>
                 </li>
             </ul>
         </div>
@@ -76,6 +76,11 @@
                             </span>
                             Sign in
                         </button>
+                        <button type="button"
+                            class="group mt-2 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-gray-900 bg-gray-300 hover:bg-gray-400 focus:outline-none focus:border-gray-600 focus:shadow-outline-gray active:bg-gray-600 transition duration-150 ease-in-out"
+                            @click="showSignUpModal = true">
+                            Sign up
+                        </button>
                     </div>
                 </form>
             </div>
@@ -106,6 +111,67 @@
                 </span>
             </div>
         </footer>
+
+        <!-- Sign Up Modal -->
+        <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
+            v-if="showSignUpModal">
+            <div class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <form @submit="submitSignUpForm">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="block">
+                            <div class="w-100 text-center">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                                    Sign Up
+                                </h3>
+                            </div>
+                            <div class="my-3 p-3 bg-red-500 text-white rounded rounded-lg" v-if="formErrors.length != 0">
+                                <p v-for="err in formErrors">{{ err }}</p>
+                            </div>
+                            <div class="my-2 rounded-md shadow-sm">
+                                <div>
+                                    <input aria-label="Username" v-model="signUp.username" @input="checkUsernameAvailable" type="text" required
+                                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                        placeholder="Username">
+                                </div>
+                                <div class="-mt-px">
+                                    <input aria-label="Full name" v-model="signUp.name" type="text" required
+                                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                        placeholder="Full name">
+                                </div>
+                                <div class="-mt-px">
+                                    <input aria-label="Password" v-model="signUp.password" type="password" required
+                                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                        placeholder="Password">
+                                </div>
+                                <div class="-mt-px">
+                                    <input aria-label="Confirm Password" v-model="signUp.confirmPassword" @input="checkPasswordsEquality" type="password" required
+                                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                                        placeholder="Confirm Password">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                            <button type="button"
+                                class="inline-flex justify-center mr-2 w-full rounded-md border border-transparent px-4 py-2 bg-gray-300 text-base leading-6 font-medium shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                @click="showSignUpModal = false">
+                                Cerrar
+                            </button>
+                            <button type="submit"
+                                class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-500 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                Submit
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
 
     <script src="plugins/moment/moment.min.js"></script>
