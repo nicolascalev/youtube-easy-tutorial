@@ -55,6 +55,16 @@ var authreq = {
         }
     },
 
+    async signup(formData) {
+        try {
+            var { data } = await auth.post('/signup', formData)
+            return data
+        } catch (err) {
+            console.log('from api service', err)
+            alert(err)
+        }
+    },
+
     logout() {
         var confirmed = confirm('Sure you want to logout?')
         if (!confirmed) return;
