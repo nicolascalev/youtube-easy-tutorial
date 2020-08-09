@@ -22,10 +22,10 @@ async function initialize() {
     }, err => {
         var error;
         error = err.message;
-        if (err.response.data) {
-            error = err.response.data;
-            error = error.details ? error.details : error;
-            error = (!error.details && error.message) ? error.message : error;
+        if (_.get(err, 'err.response.data')) {
+            error =  _.get(err, 'response.data.details');
+            error = !error ? _.get(err, 'response.data.message') : error;
+            error = !error ? JSON.stringify(_.get(err, 'response.data'), undefined, 2) : error;
             if (err.response.status == 401) return authreq.reloadAccessToken();
         }
         return Promise.reject(error);
