@@ -17,6 +17,10 @@ var app = new Vue({
         }
     },
 
+    created() {
+        this.debCheckUsernameAvailable = _.debounce(this.checkUsernameAvailable, 1000)
+    },
+
     methods: {
         async submitLoginForm(e) {
             e.preventDefault();

@@ -12,6 +12,7 @@ var app = new Vue({
 
     created() {
         this.findPlaces();
+        this.debFindPlaces = _.debounce(this.findPlaces,1000)
     },
 
     methods: {
