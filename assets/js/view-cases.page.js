@@ -13,6 +13,7 @@ var app = new Vue({
 
     created() {
         this.findCases();
+        this.debFindCases = _.debounce(this.findCases, 1000)
     },
 
     methods: {
