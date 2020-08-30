@@ -1,3 +1,5 @@
 .vscode
 BASETEMP.html
 createContent.js
+
+node_modules
