@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://covid-easyapp.herokuapp.com';
+const API_BASE_URL = 'http://localhost:1337';
 
 const api = axios.create({
     baseURL: API_BASE_URL
@@ -126,11 +126,14 @@ var req = {
 
     async replace(model, id, association, array) {
         const options = {
-            headers: { 'content-type': 'text/plain' }
+            headers: { 'content-type': 'application/json' }
         }
-        var array = `[${array.toString()}]`;
+        var list = JSON.stringify({
+            places: array.toString()
+        });
+
         try {
-            var { data } = await api.put(`/${model}/${id}/${association}`, array, options);
+            var { data } = await api.patch(`/${model}/${id}/${association}`, list, options);
             return data;
         } catch (err) {
             alert(err);
